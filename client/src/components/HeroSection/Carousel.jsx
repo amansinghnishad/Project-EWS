@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
@@ -25,15 +26,45 @@ const Carousel = ({ loop = true }) => {
   const [index, setIndex] = useState(0);
   const length = slides.length;
 
+  const wrap = (i, len) => {
+    return ((i % len) + len) % len;
+  };
+
   const goTo = (i) => {
     const newIndex = loop
-      ? ((i % length) + length) % length
+      ? wrap(i, length)
       : Math.max(0, Math.min(i, length - 1));
     setIndex(newIndex);
   };
 
   const next = () => goTo(index + 1);
   const prev = () => goTo(index - 1);
+
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+  };
+
+  const [direction, setDirection] = useState(0);
+
+  const paginate = (newDirection) => {
+    goTo(index + newDirection);
+    setDirection(newDirection);
+  };
+
+  const slideIndex = wrap(index, slides.length);
 
   return (
     <div
@@ -42,34 +73,51 @@ const Carousel = ({ loop = true }) => {
       aria-roledescription="carousel"
       aria-label="Hero image carousel"
     >
-      <div
-        className="flex h-full transition-transform duration-500 ease-out"
-        style={{ transform: `translateX(-${index * 100}%)` }}
-      >
-        {slides.map((s, i) => (
-          <div key={i} className="relative w-full h-full shrink-0">
-            <img
-              src={s.src}
-              alt={s.alt}
-              className="absolute inset-0 w-full h-full object-cover"
-              draggable={false}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-            <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
-              <h3 className="text-white text-2xl sm:text-3xl font-semibold drop-shadow">
-                {s.title}
-              </h3>
-              <p className="text-white/90 mt-1 drop-shadow text-sm sm:text-base">
-                {s.subtitle}
-              </p>
-            </div>
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={index}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 },
+          }}
+          className="absolute w-full h-full"
+        >
+          <img
+            src={slides[slideIndex].src}
+            alt={slides[slideIndex].alt}
+            className="absolute inset-0 w-full h-full object-cover"
+            draggable={false}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+          <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-white text-2xl sm:text-3xl font-semibold drop-shadow"
+            >
+              {slides[slideIndex].title}
+            </motion.h3>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+              className="text-white/90 mt-1 drop-shadow text-sm sm:text-base"
+            >
+              {slides[slideIndex].subtitle}
+            </motion.p>
           </div>
-        ))}
-      </div>
+        </motion.div>
+      </AnimatePresence>
 
       <button
         type="button"
-        onClick={prev}
+        onClick={() => paginate(-1)}
         className="absolute left-2 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-9 h-9 rounded-full bg-black/40 text-white hover:bg-black/60 transition"
         aria-label="Previous slide"
       >
@@ -77,7 +125,7 @@ const Carousel = ({ loop = true }) => {
       </button>
       <button
         type="button"
-        onClick={next}
+        onClick={() => paginate(1)}
         className="absolute right-2 top-1/2 -translate-y-1/2 z-10 grid place-items-center w-9 h-9 rounded-full bg-black/40 text-white hover:bg-black/60 transition"
         aria-label="Next slide"
       >

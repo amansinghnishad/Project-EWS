@@ -1,140 +1,144 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import FacebookIcon from "../../assets/facebook.svg";
 import TwitterIcon from "../../assets/twitter.svg";
 
-const footerLinks = {
-  Solutions: [
-    { title: "Marketing", path: "#" },
-    { title: "Analytics", path: "#" },
-    { title: "Commerce", path: "#" },
-    { title: "Insights", path: "#" },
-  ],
-  Support: [
-    { title: "Pricing", path: "#" },
-    { title: "Documentation", path: "#" },
-    { title: "Guides", path: "#" },
-    { title: "API Status", path: "#" },
-  ],
-  Company: [
-    { title: "About", path: "/about" },
-    { title: "Blog", path: "#" },
-    { title: "Jobs", path: "#" },
-    { title: "Press", path: "#" },
-  ],
-  Legal: [
-    { title: "Claim", path: "#" },
-    { title: "Privacy", path: "#" },
-    { title: "Terms", path: "#" },
-  ],
-};
-
-const SocialIcon = ({ path, src, alt }) => (
-  <a href={path} className="text-gray-400 hover:text-white">
-    <span className="sr-only">{alt}</span>
-    <img src={src} alt={alt} className="h-6 w-6" />
+const SocialIcon = ({ href, Icon, alt }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gray-800/60 hover:bg-gray-700 transition"
+    aria-label={alt}
+  >
+    <img src={Icon} className="h-4 w-4" alt="" />
   </a>
 );
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return (
-    <footer className="bg-gray-900 text-white" aria-labelledby="footer-heading">
+    <footer
+      className="bg-gray-900 text-gray-300"
+      aria-labelledby="footer-heading"
+    >
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8 xl:col-span-1">
-            <a href="/" className="text-2xl font-bold">
-              Eklavya Welfare Society
-            </a>
-            <p className="text-gray-400 text-base">
-              Making the web a more beautiful place.
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          {/* Brand */}
+          <div>
+            <div className="text-2xl font-extrabold tracking-tight text-white">
+              EWS
+            </div>
+            <p className="mt-3 text-sm text-gray-400">
+              Eklavya Welfare Society — free career guidance and development for
+              students.
             </p>
-            <div className="flex space-x-6">
-              <SocialIcon path="#" src={FacebookIcon} alt="Facebook" />
-              <SocialIcon path="#" src={TwitterIcon} alt="Twitter" />
+            <div className="mt-4 flex items-center gap-3">
+              <SocialIcon href="#" Icon={FacebookIcon} alt="Facebook" />
+              <SocialIcon href="#" Icon={TwitterIcon} alt="Twitter" />
             </div>
           </div>
-          <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  Solutions
-                </h3>
-                <ul className="mt-4 space-y-4">
-                  {footerLinks.Solutions.map((link) => (
-                    <li key={link.title}>
-                      <a
-                        href={link.path}
-                        className="text-base text-gray-300 hover:text-white"
-                      >
-                        {link.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  Support
-                </h3>
-                <ul className="mt-4 space-y-4">
-                  {footerLinks.Support.map((link) => (
-                    <li key={link.title}>
-                      <a
-                        href={link.path}
-                        className="text-base text-gray-300 hover:text-white"
-                      >
-                        {link.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  Company
-                </h3>
-                <ul className="mt-4 space-y-4">
-                  {footerLinks.Company.map((link) => (
-                    <li key={link.title}>
-                      <a
-                        href={link.path}
-                        className="text-base text-gray-300 hover:text-white"
-                      >
-                        {link.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                  Legal
-                </h3>
-                <ul className="mt-4 space-y-4">
-                  {footerLinks.Legal.map((link) => (
-                    <li key={link.title}>
-                      <a
-                        href={link.path}
-                        className="text-base text-gray-300 hover:text-white"
-                      >
-                        {link.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+
+          {/* Quick Links */}
+          <div>
+            <div className="text-sm font-semibold text-white">Quick Links</div>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "text-white" : "hover:text-white"
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/about"
+                  className={({ isActive }) =>
+                    isActive ? "text-white" : "hover:text-white"
+                  }
+                >
+                  About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/gallery"
+                  className={({ isActive }) =>
+                    isActive ? "text-white" : "hover:text-white"
+                  }
+                >
+                  Gallery
+                </NavLink>
+              </li>
+              <li>
+                <a href="mailto:contact@ews.org" className="hover:text-white">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <div className="text-sm font-semibold text-white">Resources</div>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-white">
+                  Programs
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Workshops
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Mentorship
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <div className="text-sm font-semibold text-white">Get in touch</div>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>
+                <a href="mailto:contact@ews.org" className="hover:text-white">
+                  contact@ews.org
+                </a>
+              </li>
+              <li>
+                <a href="tel:+911234567890" className="hover:text-white">
+                  +91 12345 67890
+                </a>
+              </li>
+              <li>
+                <span className="text-gray-400">Delhi, India</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className="mt-12 border-t border-gray-800 pt-8">
-          <p className="text-base text-gray-400 text-center">
-            &copy; {new Date().getFullYear()} Eklavya Welfare Society. All
-            rights reserved.
+
+        <div className="mt-10 border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs">
+            &copy; {year} Eklavya Welfare Society. All rights reserved.
           </p>
+          <div className="flex items-center gap-6 text-xs">
+            <a href="#" className="hover:text-white">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-white">
+              Terms
+            </a>
+          </div>
         </div>
       </div>
     </footer>

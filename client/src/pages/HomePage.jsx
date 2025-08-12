@@ -1,5 +1,5 @@
 import React from "react";
-import Gallery from "../components/common/cards/Gallery";
+import Gallery from "../components/HeroSection/Gallery";
 import Carousel from "../components/HeroSection/Carousel";
 
 const HomePage = () => {
