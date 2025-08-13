@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 const IntroAnimation = ({ onComplete, isSkipping }) => {
   const introRef = useRef(null);
   const videoRef = useRef(null);
+  const [videoSrc, setVideoSrc] = useState("/videos/intro.mp4");
 
   useEffect(() => {
     if (isSkipping) {
@@ -18,6 +19,18 @@ const IntroAnimation = ({ onComplete, isSkipping }) => {
       });
     }
   }, [isSkipping, onComplete]);
+
+  useEffect(() => {
+    const isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(
+      navigator.userAgent || ""
+    );
+    const isSmallViewport = window.matchMedia("(max-width: 768px)").matches;
+    const shouldUseMobile = isMobileUA || isSmallViewport;
+    const nextSrc = shouldUseMobile
+      ? "/videos/Intromobi.mp4"
+      : "/videos/intro.mp4";
+    setVideoSrc(nextSrc);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -46,13 +59,7 @@ const IntroAnimation = ({ onComplete, isSkipping }) => {
       ref={introRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black"
     >
-      <video
-        ref={videoRef}
-        src="/videos/intro.mp4"
-        autoPlay
-        muted
-        playsInline
-      />
+      <video ref={videoRef} src={videoSrc} autoPlay muted playsInline />
     </div>
   );
 };
