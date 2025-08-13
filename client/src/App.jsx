@@ -5,6 +5,7 @@ import Footer from "./components/common/Footer";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import GalleryPage from "./pages/GalleryPage";
+import ContactPage from "./pages/ContactPage";
 import IntroAnimation from "./components/animations/IntroAnimation";
 import RippleAnimation from "./components/animations/RippleAnimation";
 import IntroNavbar from "./components/common/IntroNavbar";
@@ -58,6 +59,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
           <Footer />
         </Router>

@@ -353,6 +353,7 @@ class App {
       scrollEase = 0.05,
       cardScale = 0.8,
       onHoverChange = null,
+      onItemClick = null,
     } = {}
   ) {
     document.documentElement.classList.remove("no-js");
@@ -361,6 +362,7 @@ class App {
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.cardScale = cardScale;
     this.onHoverChange = onHoverChange;
+    this.onItemClick = onItemClick;
     this.currentHovered = null;
     this.onCheckDebounce = debounce(this.onCheck, 200);
     this.createRenderer();
@@ -397,53 +399,66 @@ class App {
       {
         image: `https://images.unsplash.com/photo-1520697222861-7f2225d0c50b?q=80&w=1600&auto=format&fit=crop`,
         text: "Mentorship",
+        description: "One-to-one mentorship that grows skills and confidence.",
       },
       {
         image: `https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1600&auto=format&fit=crop`,
         text: "Workshop",
+        description: "Hands-on sessions in coding, design, and communication.",
       },
       {
         image: `https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop`,
         text: "Community",
+        description: "An inclusive community to learn, share, and collaborate.",
       },
       {
         image: `https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1600&auto=format&fit=crop`,
         text: "Guidance",
+        description: "Support for careers, scholarships, and life decisions.",
       },
       {
         image: `https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1600&auto=format&fit=crop`,
         text: "Careers",
+        description: "Mock interviews, resumes, and job-readiness practice.",
       },
       {
         image: `https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop`,
         text: "Team",
+        description: "Volunteers and mentors powering EWS initiatives.",
       },
       {
         image: `https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop`,
         text: "Campus",
+        description: "Scenes from events, outreach, and student showcases.",
       },
       {
         image: `https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1600&auto=format&fit=crop`,
         text: "Seminar",
+        description: "Talks by experts, alumni, and community leaders.",
       },
       {
         image: `https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1600&auto=format&fit=crop`,
         text: "Mentor",
+        description: "Mentors guiding with empathy and experience.",
       },
       {
         image: `https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop`,
         text: "Coding",
+        description: "Code nights and hack sessions solving real problems.",
       },
       {
         image: `https://images.unsplash.com/photo-1522071901873-411886a10004?q=80&w=1600&auto=format&fit=crop`,
         text: "Workshop 2",
+        description: "Advanced workshops with projects and peer feedback.",
       },
       {
         image: `https://images.unsplash.com/photo-1472289065668-ce650ac443d2?q=80&w=1600&auto=format&fit=crop`,
         text: "City",
+        description: "Stories from the neighborhoods we serve.",
       },
     ];
     const galleryItems = items && items.length ? items : defaultItems;
+    this.originalItems = galleryItems;
     this.mediasImages = galleryItems.concat(galleryItems);
     this.medias = this.mediasImages.map(
       (data, index) =>
@@ -468,8 +483,10 @@ class App {
   }
   getPointerWorld(e) {
     const rect = this.gl.canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const touchX = e.touches?.[0]?.clientX ?? e.changedTouches?.[0]?.clientX;
+    const touchY = e.touches?.[0]?.clientY ?? e.changedTouches?.[0]?.clientY;
+    const clientX = touchX !== undefined ? touchX : e.clientX;
+    const clientY = touchY !== undefined ? touchY : e.clientY;
     const x = clientX - rect.left;
     const y = clientY - rect.top;
     const worldX =
@@ -502,9 +519,33 @@ class App {
     const distance = (this.start - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = this.scroll.position + distance;
   }
-  onTouchUp() {
+  onTouchUp(e) {
+    const touchX =
+      e && (e.touches?.[0]?.clientX ?? e.changedTouches?.[0]?.clientX);
+    const end = touchX !== undefined ? touchX : e?.clientX;
+    const moved =
+      typeof end === "number" && typeof this.start === "number"
+        ? Math.abs(this.start - end)
+        : 9999;
     this.isDown = false;
     this.onCheck();
+    // If it was a tap/click (not a drag), perform hit test and emit click
+    if (moved < 6) {
+      const p = this.getPointerWorld(e || {});
+      let hit = null;
+      for (let i = 0; i < (this.medias?.length || 0); i++) {
+        const m = this.medias[i];
+        if (this.hitTestMedia(p, m)) {
+          hit = m;
+          break;
+        }
+      }
+      if (hit && this.onItemClick && this.originalItems?.length) {
+        const idxWrapped = hit.index % this.originalItems.length;
+        const raw = this.originalItems[idxWrapped];
+        this.onItemClick({ index: idxWrapped, ...raw });
+      }
+    }
   }
   onMouseMove(e) {
     if (!this.medias || this.isDown) return;
@@ -530,6 +571,7 @@ class App {
             index: idx,
             text: raw?.text || "",
             image: raw?.image || "",
+            description: raw?.description || "",
           });
         } else {
           this.onHoverChange(null);
@@ -630,6 +672,7 @@ export default function CircularGallery({
   scrollSpeed = 2,
   scrollEase = 0.05,
   cardScale = 0.8,
+  onItemClick = null,
 }) {
   const containerRef = useRef(null);
   const [hovered, setHovered] = useState(null);
@@ -644,6 +687,7 @@ export default function CircularGallery({
       scrollEase,
       cardScale,
       onHoverChange: (data) => setHovered(data),
+      onItemClick,
     });
     return () => app.destroy();
   }, [
@@ -655,6 +699,7 @@ export default function CircularGallery({
     scrollSpeed,
     scrollEase,
     cardScale,
+    onItemClick,
   ]);
   return (
     <div
@@ -679,11 +724,17 @@ export default function CircularGallery({
             fontSize: 14,
             border: "1px solid rgba(255,255,255,0.12)",
             boxShadow: "0 6px 16px rgba(0,0,0,0.35)",
-            whiteSpace: "nowrap",
+            maxWidth: 520,
+            whiteSpace: "normal",
+            textAlign: "center",
           }}
         >
-          <strong style={{ marginRight: 6 }}>{hovered.text}</strong>
-          <span style={{ opacity: 0.85 }}>— Explore more moments</span>
+          <div style={{ fontWeight: 700, marginBottom: 4 }}>{hovered.text}</div>
+          {hovered.description && (
+            <div style={{ opacity: 0.9, lineHeight: 1.3 }}>
+              {hovered.description}
+            </div>
+          )}
         </div>
       )}
     </div>
