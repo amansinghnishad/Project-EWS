@@ -93,7 +93,7 @@ const Carousel = ({ loop = true }) => {
             className="absolute inset-0 w-full h-full object-cover"
             draggable={false}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-end p-6 text-center">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">EWS Logo</title>
+  <desc id="desc">A simple circular logo with the letters EWS</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#g)"/>
+  <circle cx="32" cy="32" r="30" stroke="#0ea5e9" stroke-width="2" fill="none" opacity="0.6"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff" letter-spacing="1.5">EWS</text>
+</svg>

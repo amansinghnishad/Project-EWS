@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import logoUrl from "../../assets/logo.svg";
 
 const navLinks = [
   { title: "Home", path: "/" },
   { title: "About", path: "/about" },
   { title: "Gallery", path: "/gallery" },
-  { title: "Contact", path: "/contact" },
+  { title: "Contact Us", path: "/contact" },
+  { title: "Join Us", path: "/join" },
 ];
 
 const Navbar = () => {
@@ -46,12 +48,20 @@ const Navbar = () => {
   };
 
   return (
-    <nav ref={navRef} className="bg-white shadow-lg sticky top-0 z-50">
+    <nav
+      ref={navRef}
+      className="bg-[#f5aa7442] backdrop-blur-sm w-[80%] mx-auto mt-4 shadow-lg sticky top-8 z-50 rounded-[50px]"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <a href="/" className="text-2xl font-bold text-gray-800">
-              EWS
+            <a href="/" className="flex items-center gap-2 group">
+              <img
+                src={logoUrl}
+                alt="EWS logo"
+                className="h-8 w-8 select-none"
+                draggable="false"
+              />
             </a>
           </div>
 
@@ -63,18 +73,31 @@ const Navbar = () => {
               animate="visible"
             >
               {navLinks.map((link, index) => (
-                <motion.div key={index} variants={itemVariants}>
-                  <NavLink
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        isActive
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-600 hover:bg-gray-700 hover:text-white"
-                      }`
-                    }
-                  >
-                    {link.title}
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="relative"
+                >
+                  <NavLink to={link.path}>
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`px-3 py-2 text-sm font-medium transition-colors ${
+                            isActive
+                              ? "text-gray-700"
+                              : "text-black hover:text-gray-900"
+                          }`}
+                        >
+                          {link.title}
+                        </span>
+                        {isActive && (
+                          <motion.div
+                            className="absolute bottom-[-2px] left-0 right-0 h-0.5 bg-[#F5A974]"
+                            layoutId="underline"
+                          />
+                        )}
+                      </>
+                    )}
                   </NavLink>
                 </motion.div>
               ))}

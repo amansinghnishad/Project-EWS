@@ -1,7 +1,9 @@
 import React from "react";
-import Gallery from "../components/HeroSection/Gallery";
-import Carousel from "../components/HeroSection/Carousel";
+import Gallery from "../components/Home/Gallery";
+import Carousel from "../components/Home/Carousel";
 import NoticeGrid from "../components/Home/NoticeGrid";
+
+import ButtonGroup from "../components/common/ButtonGroup";
 
 const HomePage = () => {
   return (
@@ -11,30 +13,23 @@ const HomePage = () => {
         <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center px-4">
           <div className="pointer-events-auto max-w-3xl mx-auto text-center text-[#eae6df]">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight drop-shadow-md">
-              Empowering With Support
+              Empowering Communities Through Education and Opportunity{" "}
             </h2>
             <p className="mt-2 opacity-90 drop-shadow">
-              Mentorship, workshops, and a welcoming community to help you grow.
+              Eklavya Welfare Society is committed to uplifting underprivileged
+              lives through sustainable initiatives.
             </p>
-            <div className="mt-4 flex items-center justify-center gap-3">
-              <a
-                href="/about"
-                className="px-5 py-2.5 rounded-xl font-semibold bg-white text-gray-900 hover:bg-gray-100 transition"
-              >
-                Learn more
-              </a>
-              <a
-                href="/gallery"
-                className="px-5 py-2.5 rounded-xl font-semibold bg-emerald-500/90 text-gray-900 hover:bg-emerald-400 transition"
-              >
-                Explore gallery
-              </a>
+            <div className="mt-4 flex justify-center">
+              <ButtonGroup
+                button1Text={"Learn More"}
+                button2Text={"Donate Us"}
+              />
             </div>
           </div>
         </div>
       </div>
       <NoticeGrid />
-      <div className="gallery-container flex justify-center items-center max-w-7xl mx-auto p-4">
+      <div className="gallery-container flex justify-center items-center max-w-[90%] mx-auto p-4">
         <Gallery />
       </div>
     </div>
