@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
 import CircularGallery from "../components/Gallery/CircularGallery";
 import Modal from "../components/Gallery/Modal";
 import "./GalleryPage.css";

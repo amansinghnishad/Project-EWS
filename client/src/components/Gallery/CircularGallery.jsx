@@ -626,37 +626,50 @@ class App {
     this.raf = window.requestAnimationFrame(this.update);
   };
   addEventListeners() {
+    // Cache bound handlers so we can remove them later
+    this._onWheel = this.onWheel.bind(this);
+    this._onMouseDown = this.onTouchDown.bind(this);
+    this._onMouseMove = this.onTouchMove.bind(this);
+    this._onMouseUp = this.onTouchUp.bind(this);
+    this._onTouchStart = this.onTouchDown.bind(this);
+    this._onTouchMove = this.onTouchMove.bind(this);
+    this._onTouchEnd = this.onTouchUp.bind(this);
+    this._onCanvasMouseMove = this.onMouseMove.bind(this);
+    this._onCanvasMouseLeave = this.onMouseLeave.bind(this);
+
     window.addEventListener("resize", this.onResize);
-    window.addEventListener("mousewheel", this.onWheel.bind(this));
-    window.addEventListener("wheel", this.onWheel.bind(this));
-    window.addEventListener("mousedown", this.onTouchDown.bind(this));
-    window.addEventListener("mousemove", this.onTouchMove.bind(this));
-    window.addEventListener("mouseup", this.onTouchUp.bind(this));
-    window.addEventListener("touchstart", this.onTouchDown.bind(this));
-    window.addEventListener("touchmove", this.onTouchMove.bind(this));
-    window.addEventListener("touchend", this.onTouchUp.bind(this));
+    window.addEventListener("mousewheel", this._onWheel);
+    window.addEventListener("wheel", this._onWheel);
+    window.addEventListener("mousedown", this._onMouseDown);
+    window.addEventListener("mousemove", this._onMouseMove);
+    window.addEventListener("mouseup", this._onMouseUp);
+    window.addEventListener("touchstart", this._onTouchStart, {
+      passive: true,
+    });
+    window.addEventListener("touchmove", this._onTouchMove, { passive: true });
+    window.addEventListener("touchend", this._onTouchEnd);
     if (this.gl?.canvas) {
-      this.gl.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
-      this.gl.canvas.addEventListener(
-        "mouseleave",
-        this.onMouseLeave.bind(this)
-      );
+      this.gl.canvas.addEventListener("mousemove", this._onCanvasMouseMove);
+      this.gl.canvas.addEventListener("mouseleave", this._onCanvasMouseLeave);
     }
   }
   destroy() {
     window.cancelAnimationFrame(this.raf);
     window.removeEventListener("resize", this.onResize);
-    window.removeEventListener("mousewheel", this.onWheel);
-    window.removeEventListener("wheel", this.onWheel);
-    window.removeEventListener("mousedown", this.onTouchDown);
-    window.removeEventListener("mousemove", this.onTouchMove);
-    window.removeEventListener("mouseup", this.onTouchUp);
-    window.removeEventListener("touchstart", this.onTouchDown);
-    window.removeEventListener("touchmove", this.onTouchMove);
-    window.removeEventListener("touchend", this.onTouchUp);
+    window.removeEventListener("mousewheel", this._onWheel);
+    window.removeEventListener("wheel", this._onWheel);
+    window.removeEventListener("mousedown", this._onMouseDown);
+    window.removeEventListener("mousemove", this._onMouseMove);
+    window.removeEventListener("mouseup", this._onMouseUp);
+    window.removeEventListener("touchstart", this._onTouchStart);
+    window.removeEventListener("touchmove", this._onTouchMove);
+    window.removeEventListener("touchend", this._onTouchEnd);
     if (this.gl?.canvas) {
-      this.gl.canvas.removeEventListener("mousemove", this.onMouseMove);
-      this.gl.canvas.removeEventListener("mouseleave", this.onMouseLeave);
+      this.gl.canvas.removeEventListener("mousemove", this._onCanvasMouseMove);
+      this.gl.canvas.removeEventListener(
+        "mouseleave",
+        this._onCanvasMouseLeave
+      );
     }
     if (this.renderer?.gl?.canvas?.parentNode)
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);

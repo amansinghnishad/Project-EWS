@@ -2,7 +2,7 @@ import React from "react";
 import Gallery from "../components/Home/Gallery";
 import Carousel from "../components/Home/Carousel";
 import NoticeGrid from "../components/Home/NoticeGrid";
-
+import About from "../components/Home/About";
 import ButtonGroup from "../components/common/ButtonGroup";
 
 const HomePage = () => {
@@ -29,6 +29,9 @@ const HomePage = () => {
         </div>
       </div>
       <NoticeGrid />
+      <div className="about-container flex justify-center items-center max-w-[90%] mx-auto p-4">
+        <About />
+      </div>
       <div className="gallery-container flex justify-center items-center max-w-[90%] mx-auto p-4">
         <Gallery />
       </div>

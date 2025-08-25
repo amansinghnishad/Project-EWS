@@ -37,8 +37,8 @@ const Carousel = ({ loop = true }) => {
     setIndex(newIndex);
   };
 
-  const next = () => goTo(index + 1);
-  const prev = () => goTo(index - 1);
+  // const next = () => goTo(index + 1);
+  // const prev = () => goTo(index - 1);
 
   const variants = {
     enter: (direction) => ({

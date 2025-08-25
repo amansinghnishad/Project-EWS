@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import "./Modal.css";
 
 const Modal = ({ item, onClose }) => {
-  if (!item) return null;
-
   const contentRef = useRef(null);
   const lastFocusedRef = useRef(null);
   const titleId = useId();
@@ -84,6 +82,8 @@ const Modal = ({ item, onClose }) => {
       }
     };
   }, [onClose]);
+
+  if (!item) return null;
 
   return (
     <AnimatePresence>

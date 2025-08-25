@@ -19,7 +19,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
   return (
     <footer
-      className="bg-gray-900 text-gray-300"
+      className="bg-gray-900 text-gray-300 rounded-t-[100px] mt-8 sm:mt-10 md:mt-12 lg:mt-16 mx-4 sm:mx-6 md:mx-12 lg:mx-[4.5rem]"
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">
