@@ -9,6 +9,7 @@ import ContactPage from "./pages/ContactPage";
 import IntroAnimation from "./components/animations/IntroAnimation";
 import RippleAnimation from "./components/animations/RippleAnimation";
 import IntroNavbar from "./components/common/IntroNavbar";
+import GradualBlur from "./components/common/GradualBlur";
 import Lenis from "lenis";
 import "./App.css";
 
@@ -55,6 +56,7 @@ function App() {
       {!introVisible && (
         <Router>
           <Navbar />
+
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -63,6 +65,18 @@ function App() {
           </Routes>
           <Footer />
         </Router>
+      )}
+      {!introVisible && (
+        <GradualBlur
+          position="bottom"
+          height="6rem"
+          strength={2}
+          divCount={5}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+          target="page"
+        />
       )}
     </>
   );

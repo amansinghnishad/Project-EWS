@@ -3,7 +3,7 @@ import CardShell from "./CardShell";
 
 const NoticeList = ({ title }) => (
   <CardShell className="min-h-[440px] md:min-h-[440px] flex flex-col shadow-inner">
-    <h3 className="text-xl font-bold text-stone-800 text-center mb-4">
+    <h3 className="text-xl font-bold text-[#ffffff] text-center mb-4">
       {title}
     </h3>
     <div

@@ -44,7 +44,7 @@ const CardShell = ({ children, className = "" }) => {
       onMouseMove={tilt.onMove}
       onMouseLeave={tilt.onLeave}
       onWheel={handleWheel}
-      className={`relative rounded-3xl border border-stone-300 bg-stone-100/80 bg-gradient-radial from-black to-transparent transition-transform duration-200 ${className}`}
+      className={`relative rounded-3xl border border-[#0000003d] bg-[#ffffff0e] backdrop-blur-[2px] shadow-lg shadow-[#00000094] transition-transform duration-200 ${className}`}
       style={{ willChange: "transform", ...tilt.style }}
     >
       {/* Shine */}

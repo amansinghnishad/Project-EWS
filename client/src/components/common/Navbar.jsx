@@ -50,7 +50,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className="bg-[#f5aa7442] backdrop-blur-sm w-[80%] mx-auto mt-4 shadow-lg sticky top-8 z-50 rounded-[50px]"
+      className="bg-[#ffffff0e] backdrop-blur-[2px] w-[80%] mx-auto mt-4 inner-shadow shadow-xl shadow-[#00000094] sticky top-8 z-50 rounded-[50px]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -85,7 +85,7 @@ const Navbar = () => {
                           className={`px-3 py-2 text-sm font-medium transition-colors ${
                             isActive
                               ? "text-gray-700"
-                              : "text-black hover:text-gray-900"
+                              : "text-white hover:text-gray-500"
                           }`}
                         >
                           {link.title}

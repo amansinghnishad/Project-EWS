@@ -24,11 +24,11 @@ const ManagementCard = () => {
   return (
     <CardShell className="min-h-[440px] md:min-h-[440px] flex flex-col justify-between">
       <div className="text-center">
-        <h3 className="text-xl font-bold text-stone-800">{person.role}</h3>
+        <h3 className="text-xl font-bold text-[#ffffff]">{person.role}</h3>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center p-4">
         <div className="w-[200px] h-[250px] bg-stone-400/20 rounded-2xl mb-4"></div>
-        <h4 className="text-lg font-semibold text-stone-800">{person.name}</h4>
+        <h4 className="text-lg font-semibold text-[#ffffff]">{person.name}</h4>
       </div>
       <div className="flex justify-center">
         <ButtonGroup
