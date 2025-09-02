@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import logoUrl from "../../assets/logo.svg";
+import GlassSurface from "./GlassSurface";
 
 const navLinks = [
   { title: "Home", path: "/" },
@@ -48,11 +49,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav
+    <GlassSurface
       ref={navRef}
-      className="bg-[#ffffff0e] backdrop-blur-[2px] w-[80%] mx-auto mt-4 inner-shadow shadow-xl shadow-[#00000094] sticky top-8 z-50 rounded-[50px]"
+      width="80%"
+      height="auto"
+      borderRadius={30}
+      className="mx-auto mt-4 sticky top-8 z-50"
+      blur={5}
+      opacity={0.1}
+      backgroundOpacity={0.1}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center gap-2 group">
@@ -84,8 +91,8 @@ const Navbar = () => {
                         <span
                           className={`px-3 py-2 text-sm font-medium transition-colors ${
                             isActive
-                              ? "text-gray-700"
-                              : "text-white hover:text-gray-500"
+                              ? "text-white font-semibold"
+                              : "text-gray-300 hover:text-white"
                           }`}
                         >
                           {link.title}
@@ -178,7 +185,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </GlassSurface>
   );
 };
 
