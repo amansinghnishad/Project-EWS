@@ -8,12 +8,12 @@ import ButtonGroup from "../components/common/ButtonGroup";
 const HomePage = () => {
   return (
     <div className="hero-section">
-      <div className="w-full h-[40rem] flex justify-center pt-10 relative">
+      <div className="w-full h-[40rem] flex justify-center pt-10 relative bg-[linear-gradient(to_top,#492900_0%,transparent_50%)]">
         <Carousel />
         <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center px-4">
           <div className="pointer-events-auto max-w-3xl mx-auto text-center text-[#eae6df]">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight drop-shadow-md">
-              Empowering Communities Through Education and Opportunity{" "}
+              Empowering Communities Through Education and Opportunity
             </h2>
             <p className="mt-2 opacity-90 drop-shadow">
               Eklavya Welfare Society is committed to uplifting underprivileged
@@ -21,8 +21,8 @@ const HomePage = () => {
             </p>
             <div className="mt-4 flex justify-center">
               <ButtonGroup
-                button1Text={"Learn More"}
-                button2Text={"Donate Us"}
+                button1Text={"Learn More ..."}
+                button2Text={"Donate Us ..."}
               />
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import GlassSurface from "./GlassSurface";
 
 const ButtonGroup = ({
   button1Text,
@@ -8,23 +9,28 @@ const ButtonGroup = ({
   className,
 }) => {
   return (
-    <div
-      className={`flex items-center justify-center bg-[#ffffff0e] backdrop-blur-[2px] border border-white/20 rounded-full overflow-hidden shadow-lg shadow-[#00000094] ${className}`}
+    <GlassSurface
+      className={`flex items-center justify-center rounded-full overflow-hidden shadow-lg ${className}`}
+      borderRadius={9999}
+      height={60}
+      width={340}
+      style={{ padding: 0, width: 340, background: "rgba(245, 122, 35, 0.18)" }}
+      backgroundOpacity={0.18}
     >
       <button
-        className="px-8 py-3 text-base font-medium text-white hover:bg-white/10 transition-colors duration-300"
+        className="px-8 py-3 text-base font-medium text-white bg-(#f57a23b2) bg-clip-padding backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors duration-300 rounded-l-full"
         onClick={onButton1Click}
       >
         {button1Text}
       </button>
       <div className="w-px h-6 bg-white/30"></div>
       <button
-        className="px-8 py-3 text-base font-medium bg-[#f57a23b2] text-white hover:bg-[#F5A974] transition-colors duration-300"
+        className="px-8 py-3 text-base font-medium text-white bg-[#f57a23b2]/40 bg-clip-padding backdrop-blur-sm border border-white/20 hover:bg-[#f57a23b2]/60 transition-colors duration-300 rounded-r-full"
         onClick={onButton2Click}
       >
         {button2Text}
       </button>
-    </div>
+    </GlassSurface>
   );
 };
 
